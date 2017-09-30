@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.yh.task</groupId>
+	<artifactId>yh-parent</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>${project.artifactId}</name>
+	<url>http://maven.apache.org</url>
+
+	<modules>
+
+        <module>http-service</module>
+		<module>redis-service</module>
+		<module>task-quartz</module>
+		
+	</modules>
+
+
+
+	<dependencies>
+
+        <!-- junit4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <!-- slf4j&logback日志管理放到parent -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+
+	</dependencies>
+
+    <repositories>
+        <!--repository>
+             <id>central maven resp</id>
+             <url>http://central.maven.org/maven2</url>
+         </repository-->
+		 
+		 <repository>
+             <id>aliyun</id>
+             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+         </repository>
+         <repository>
+             <id>spring resp</id>
+             <url>http://repo.spring.io/release</url>
+         </repository>       
+    </repositories>
+
+    <build>
+           <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+					<encoding>utf8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.quartz.mapper.SchoolMapper" >
+
+    <resultMap id="BaseResultMap" type="com.framework.quartz.entities.School" >
+        <result column="sch_no" property="schNo" jdbcType="VARCHAR"/>
+        <result column="sch_name" property="schName" jdbcType="VARCHAR"/>
+        <result column="sch_intro" property="schIntro" jdbcType="VARCHAR"/>
+        <result column="sch_motto" property="schMotto" jdbcType="VARCHAR"/>
+        <result column="sch_declare" property="schDeclare" jdbcType="VARCHAR"/>
+        <result column="sch_icon" property="schIcon" jdbcType="VARCHAR"/>
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR"/>
+        <result column="country_code" property="countryCode" jdbcType="VARCHAR"/>
+        <result column="sch_adr" property="schAdr" jdbcType="VARCHAR"/>
+        <result column="sch_desc" property="schDesc" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="test" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM edu_base_school
+        WHERE sid = #{0}
+    </select>
+
+</mapper>

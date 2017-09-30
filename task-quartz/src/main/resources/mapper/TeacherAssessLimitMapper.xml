@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.framework.quartz.mapper.TeacherAssessLimitMapper" >
+  <resultMap id="BaseResultMap" type="com.framework.quartz.entities.TeacherAssessLimit" >
+        <result column="sid" property="sid" jdbcType="BIGINT"/>			    
+        <result column="sch_sid" property="schSid" jdbcType="BIGINT"/>			    
+        <result column="tch_sid" property="tchSid" jdbcType="BIGINT"/>			    
+        <result column="sub_sid" property="subSid" jdbcType="BIGINT"/>			    
+        <result column="class_sid" property="classSid" jdbcType="BIGINT"/>			    
+        <result column="limit" property="limit" jdbcType="SMALLINT"/>			    
+        <result column="status" property="status" jdbcType="TINYINT"/>			    
+        <result column="created_dt" property="createdDt" jdbcType="TIMESTAMP"/>			    
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+	  <if test="condition.sid != null" >
+         and sid = #{condition.sid}
+      </if>
+	  <if test="condition.schSid != null" >
+         and sch_sid = #{condition.schSid}
+      </if>
+	  <if test="condition.tchSid != null" >
+         and tch_sid = #{condition.tchSid}
+      </if>
+	  <if test="condition.subSid != null" >
+         and sub_sid = #{condition.subSid}
+      </if>
+	  <if test="condition.classSid != null" >
+         and class_sid = #{condition.classSid}
+      </if>
+	  <if test="condition.limit != null" >
+         and limit = #{condition.limit}
+      </if>
+	  <if test="condition.status != null" >
+         and status = #{condition.status}
+      </if>
+	  <if test="condition.createdDt != null" >
+         and created_dt = #{condition.createdDt}
+      </if>
+    </trim>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+		sid,
+		sch_sid,
+		tch_sid,
+		sub_sid,
+		class_sid,
+		limit,
+		status,
+		created_dt
+  </sql>
+    
+    <resultMap id="teacherLimitMap" type="com.framework.quartz.entities.TeacherSubjectLimit">
+        <result column="tch_sid" property="tchId" />
+        <result column="sub_sid" property="subId" />
+        <result column="limit" property="limit" />
+    </resultMap>
+
+    <select id="getTchLimits" resultMap="teacherLimitMap">
+        SELECT tch_sid,sub_sid,`limit`
+        FROM edu_base_teacher_assess_limit
+        WHERE status = 0
+    </select>
+  
+
+</mapper>

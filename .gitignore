@@ -1,0 +1,9 @@
+/*.iml
+/http-service/*.iml
+/redis-service/*.iml
+/task-quartz/*.iml
+/http-service/target/*
+/redis-service/target/*
+/task-quartz/target/*
+/.idea/*
+!.gitignore
