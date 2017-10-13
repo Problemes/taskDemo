@@ -9,6 +9,10 @@
     <context:component-scan base-package="com.framework.quartz.service.*" />
     <context:component-scan base-package="com.framework.quartz.core.task" />
     <context:component-scan base-package="com.framework.quartz.socket" />
+    <!-- rabbitmq 扫描包 -->
+    <context:component-scan base-package="com.framework.quartz.rabbitmq" />
+
+    <import resource="classpath:rabbitMq.xml" />
 
     <!-- 加载数据库连接的资源文件 -->
     <!--<context:property-placeholder location="classpath:db.properties"/>-->
@@ -169,5 +173,10 @@
     <task:executor id="executor" pool-size="5" />
     <task:scheduler id="scheduler" pool-size="10" />
     <task:annotation-driven executor="executor" scheduler="scheduler" />
+
+    <!-- rabbitmq 激活annotation功能 -->
+    <context:annotation-config />
+    <!-- rabbitmq 激活annotation功能 -->
+    <context:spring-configured />
 
 </beans>
