@@ -6,19 +6,21 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.annotation.Resource;
 
 /**
  * spring的测试类
  * Created by HR on 2017/10/12.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:application-*.xml"})
-public class SpringTest {
-
-    @Resource(name = "messageProducer")
+@ContextConfiguration({"classpath*:application-*.xml", "classpath:mvc.xml"})
+@WebAppConfiguration
+public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests */{
+//继承AbstractTransactionalJUnit4SpringContextTests来获取Spring上下文环境来获取Bean
+    @Autowired
     private MessageProducer messageProducer;
 
     @Test

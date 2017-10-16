@@ -6,13 +6,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="com.framework.quartz.mapper" />
-    <context:component-scan base-package="com.framework.quartz.service.*" />
+    <context:component-scan base-package="com.framework.quartz.service" />
     <context:component-scan base-package="com.framework.quartz.core.task" />
     <context:component-scan base-package="com.framework.quartz.socket" />
     <!-- rabbitmq 扫描包 -->
     <context:component-scan base-package="com.framework.quartz.rabbitmq" />
 
-    <import resource="classpath:rabbitMq.xml" />
+    <import resource="classpath:application-rabbitMq.xml" />
 
     <!-- 加载数据库连接的资源文件 -->
     <!--<context:property-placeholder location="classpath:db.properties"/>-->

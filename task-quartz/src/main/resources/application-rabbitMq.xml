@@ -8,17 +8,16 @@
      http://www.springframework.org/schema/rabbit
      http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
 
-    <!--配置connection-factory，指定连接rabbit server参数 -->
+    <!--配置connection-factory，指定连接rabbit server参数-->
     <rabbit:connection-factory id="connectionFactory"
                                virtual-host="host"
-                               username="abc"
+                               username="cc"
                                password="111111"
                                host="192.168.1.118"
                                port="5672" />
 
     <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
     <rabbit:admin id="connectAdmin" connection-factory="connectionFactory" />
-
 
 
     <!--定义queue -->
@@ -32,8 +31,7 @@
     </rabbit:direct-exchange>
 
     <!-- 数据发送者 定义rabbit template用于数据的接收和发送 -->
-    <rabbit:template id="amqpTemplate"  connection-factory="connectionFactory"
-                     exchange="exchangeTest" />
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="exchangeTest" />
 
     <!-- 消息接收者 -->
     <bean id="messageReceiver" class="com.framework.quartz.rabbitmq.MessageConsumer"></bean>
@@ -83,7 +81,7 @@
     <!-- 定义direct exchange，绑定queueTest -->
     <rabbit:topic-exchange name="exchangeTest2" durable="true" auto-delete="false" declared-by="connectAdmin2">
         <rabbit:bindings>
-            <rabbit:binding queue="queueShijj" pattern="shijj.#"></rabbit:binding>
+            <rabbit:binding queue="queueShijj" pattern="queueShijj"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:topic-exchange>
 
@@ -98,5 +96,36 @@
             connection-factory="connectionFactory2">
         <rabbit:listener queues="queueShijj" ref="recieverShijj" />
     </rabbit:listener-container>
+
+
+    <!--<rabbit:connection-factory id="mqConnectionFactory"
+                               host="192.168.1.118" username="abc" password="111111"
+                               port="5672" virtual-host="host" channel-cache-size="42" />
+
+    <rabbit:admin connection-factory="mqConnectionFactory" />
+
+    &lt;!&ndash; queue 队列声明 &ndash;&gt;
+    <rabbit:queue id="queue_osm" durable="true" auto-delete="false"
+                  exclusive="false" name="queue_osm" />
+
+    &lt;!&ndash; exchange queue binging key 绑定 &ndash;&gt;
+    <rabbit:direct-exchange name="exchangeTest1"
+                            durable="true" auto-delete="false" id="exchangeTest1">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_osm" key="queue_osm" />
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    &lt;!&ndash; 消息处理者 start &ndash;&gt;
+    <bean id="receiver" class="com.framework.quartz.rabbitmq.MessageConsumer" />
+    &lt;!&ndash; 消息处理者 end &ndash;&gt;
+
+    <rabbit:listener-container
+                               connection-factory="mqConnectionFactory" acknowledge="manual"
+                               auto-startup="true" prefetch="1000" concurrency="42">
+        <rabbit:listener queues="queue_osm" ref="receiver" />
+    </rabbit:listener-container>
+
+    <rabbit:template id="template" connection-factory="mqConnectionFactory" exchange="exchangeTest1"/>-->
 
 </beans>
