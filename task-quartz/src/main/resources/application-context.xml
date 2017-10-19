@@ -13,6 +13,7 @@
     <context:component-scan base-package="com.framework.quartz.rabbitmq" />
 
     <import resource="classpath:application-rabbitMq.xml" />
+    <bean id="messageProducer" class="com.framework.quartz.rabbitmq.MessageProducer" />
 
     <!-- 加载数据库连接的资源文件 -->
     <!--<context:property-placeholder location="classpath:db.properties"/>-->

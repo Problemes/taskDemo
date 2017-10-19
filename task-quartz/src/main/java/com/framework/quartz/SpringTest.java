@@ -9,26 +9,31 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+
+import javax.servlet.ServletRegistration;
 
 
 /**
  * spring的测试类
  * Created by HR on 2017/10/12.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath*:application-*.xml", "classpath:mvc.xml"})
-@WebAppConfiguration
+/*@RunWith(SpringJUnit4ClassRunner.class)  //使用junit4进行测试
+@ContextConfiguration({"classpath*:application-*.xml"})
+@WebAppConfiguration*/
 public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests */{
 //继承AbstractTransactionalJUnit4SpringContextTests来获取Spring上下文环境来获取Bean
-    @Autowired
+   /* @Autowired
     private MessageProducer messageProducer;
-
+*/
     @Test
     public void testRabbitMq(){
-        /*ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-*.xml");
 
-        MessageProducer messageProducer2 = (MessageProducer) context.getBean("messageProducer");*/
-        int x = 10;
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-*.xml");
+
+        MessageProducer messageProducer = (MessageProducer) context.getBean("messageProducer");
+        /*int x = 10;
 
         while (x > 0){
             messageProducer.sendMessage("Hello, I am amq sender num :" + x--);
@@ -38,7 +43,7 @@ public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 }

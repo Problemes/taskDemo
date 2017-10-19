@@ -91,8 +91,24 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>JerseyServlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>
+                com.framework.quartz.api
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JerseyServlet</servlet-name>
+        <url-pattern>/restApi/*</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>com.framework.quartz.util.TestListener</listener-class>
     </listener>
-    
+
 </web-app>
