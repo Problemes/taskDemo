@@ -11,7 +11,7 @@
     <!--配置connection-factory，指定连接rabbit server参数-->
     <rabbit:connection-factory id="connectionFactory"
                                virtual-host="host"
-                               username="cc"
+                               username="abc"
                                password="111111"
                                host="192.168.1.118"
                                port="5672" />
@@ -24,14 +24,15 @@
     <rabbit:queue name="queueTest" durable="true" auto-delete="false" exclusive="false" declared-by="connectAdmin" />
 
     <!-- 定义direct exchange，绑定queueTest -->
-    <rabbit:direct-exchange name="exchangeTest" durable="true" auto-delete="false" declared-by="connectAdmin">
+    <rabbit:fanout-exchange name="exchangeTestFanout" durable="true" auto-delete="false" declared-by="connectAdmin">
         <rabbit:bindings>
-            <rabbit:binding queue="queueTest" key="queueTestKey"></rabbit:binding>
+            <!--<rabbit:binding queue="queueTest"  key="queueTestKey"></rabbit:binding>-->
+            <rabbit:binding queue="queueTest"></rabbit:binding>
         </rabbit:bindings>
-    </rabbit:direct-exchange>
+    </rabbit:fanout-exchange>
 
     <!-- 数据发送者 定义rabbit template用于数据的接收和发送 -->
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="exchangeTest" />
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="exchangeTestFanout" />
 
     <!-- 消息接收者 -->
     <bean id="messageReceiver" class="com.framework.quartz.rabbitmq.MessageConsumer"></bean>
@@ -40,17 +41,18 @@
     <rabbit:listener-container connection-factory="connectionFactory">
         <rabbit:listener queues="queueTest" ref="messageReceiver"/>
     </rabbit:listener-container>
-    <!-- ################################################# -->
+    <!-- ########################################################################################################### -->
 
     <!--定义queue -->
     <rabbit:queue name="queueChris" durable="true" auto-delete="false" exclusive="false" declared-by="connectAdmin" />
 
     <!-- 定义direct exchange，绑定queueTest -->
-    <rabbit:direct-exchange name="exchangeTest" durable="true" auto-delete="false" declared-by="connectAdmin">
+    <rabbit:fanout-exchange name="exchangeTestFanout" durable="true" auto-delete="false" declared-by="connectAdmin">
         <rabbit:bindings>
-            <rabbit:binding queue="queueChris" key="queueTestChris"></rabbit:binding>
+            <!--<rabbit:binding queue="queueChris" key="queueTestChris"></rabbit:binding>-->
+            <rabbit:binding queue="queueChris"></rabbit:binding>
         </rabbit:bindings>
-    </rabbit:direct-exchange>
+    </rabbit:fanout-exchange>
 
     <!-- 消息接收者 -->
     <bean id="receiverChris" class="com.framework.quartz.rabbitmq.ChrisConsumer"></bean>
@@ -79,9 +81,10 @@
     <rabbit:queue name="queueShijj" durable="true" auto-delete="false" exclusive="false" declared-by="connectAdmin2" />
 
     <!-- 定义direct exchange，绑定queueTest -->
+    <!-- pattern为shijj.*..          .*可以匹配一个, .#可以匹配一个或多个 -->
     <rabbit:topic-exchange name="exchangeTest2" durable="true" auto-delete="false" declared-by="connectAdmin2">
         <rabbit:bindings>
-            <rabbit:binding queue="queueShijj" pattern="queueShijj"></rabbit:binding>
+            <rabbit:binding queue="queueShijj" pattern="shijj.#"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:topic-exchange>
 
