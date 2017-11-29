@@ -13,6 +13,7 @@
 <body>
     <h4>  Test index  </h4>
     <form action="${pageContext.request.contextPath}/test/test">
+        <input type="text" name="username" value="ready:">
         <input type="text" name="schId" />
         <button type="submit"> submit </button>
     </form>

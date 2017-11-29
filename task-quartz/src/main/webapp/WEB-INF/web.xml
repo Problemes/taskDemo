@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
     <display-name>quartz</display-name>
     <!-- 配置支持spring的ContextLoaderListener监听器-->
     <listener>
@@ -71,7 +72,7 @@
         <filter-name>DruidWebStatFilter</filter-name>
         <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
         <init-param>
-            <param-name >exclusions</param-name>
+            <param-name>exclusions</param-name>
             <param-value>*. js ,*. gif ,*. jpg ,*. png ,*. css ,*. ico ,/ druid /*</param-value>
         </init-param>
     </filter>
@@ -106,6 +107,86 @@
         <servlet-name>JerseyServlet</servlet-name>
         <url-pattern>/restApi/*</url-pattern>
     </servlet-mapping>
+
+    <!-- ======================== 单点登出 ======================== -->
+    <!-- 用于单点退出，该过滤器用于实现单点登出功能，可选配置 -->
+    <!--<listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+
+    &lt;!&ndash; 该过滤器用于实现单点登出功能，可选配置。 &ndash;&gt;
+    <filter>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+    <!-- 该过滤器负责用户的认证工作，必须启用它 -->
+    <!--<filter>-->
+        <!--<filter-name>CASFilter</filter-name>-->
+        <!--<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>casServerLoginUrl</param-name>-->
+            <!--<param-value>https://localhost:8443/cas/login</param-value>&lt;!&ndash; cas 服务器登录 地址  http://IP:PORT/CasWebProName/login &ndash;&gt;-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--&lt;!&ndash; 这里的server是服务端的IP &ndash;&gt;-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8080</param-value>&lt;!&ndash; 客户端服务器地址   http://IP:PORT &ndash;&gt;-->
+        <!--</init-param>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>CASFilter</filter-name>-->
+        <!--<url-pattern>/test/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
+    <!--<filter>-->
+        <!--<filter-name>CAS Filter</filter-name>-->
+        <!--<filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>-->
+            <!--<param-value>https://localhost:8443/cas/login</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>-->
+            <!--<param-value>https://localhost:8443/cas/serviceValidate</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>-->
+            <!--<param-value>http://localhost:8080/task</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
+    <!-- 该过滤器负责对Ticket的校验工作，必须启用它 -->
+    <!--<filter>
+        <filter-name>CAS Validation Filter</filter-name>
+        <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>https://localhost:8443/cas</param-value>&lt;!&ndash; cas 服务器地址  http://IP:PORT/CasWebProName &ndash;&gt;
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>http://localhost:8080</param-value>&lt;!&ndash; 客户端服务器地址   http://IP:PORT &ndash;&gt;
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Validation Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+
 
     <listener>
         <listener-class>com.framework.quartz.util.TestListener</listener-class>

@@ -187,6 +187,12 @@
             <version>1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.yh.task</groupId>
+            <artifactId>http-service</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <!-- Spring WebSocket -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -220,10 +226,56 @@
         </dependency>
 
         <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <version>${java.ws.rs.version}</version>
         </dependency>
+
+        <!-- shiro 权限模块 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.6</version>
+        </dependency>
+
+        <!-- cas-client-core for java -->
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-client-core</artifactId>
+            <version>3.1.10</version>
+        </dependency>
+
+
+        <!-- cas client -->
+        <!--<dependency>-->
+            <!--<groupId>cas</groupId>-->
+            <!--<artifactId>casclient</artifactId>-->
+            <!--<version>2.0.11</version>-->
+        <!--</dependency>-->
+
+        <!-- for test start -->
+        <!-- for test: commons httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+
+
+        <!-- for test end -->
 
     </dependencies>
 
@@ -232,6 +284,9 @@
         <resources>
             <resource>
                 <directory>../configs/${buildEnv}/task-quartz</directory>
+            </resource>
+            <resource>
+                <directory>../configs/${buildEnv}/redis-service</directory>
             </resource>
             <resource>
                 <directory>./src/main/resources</directory>
