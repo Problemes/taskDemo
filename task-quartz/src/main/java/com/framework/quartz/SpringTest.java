@@ -13,6 +13,9 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletRegistration;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -46,4 +49,5 @@ public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests 
         }*/
 
     }
+
 }

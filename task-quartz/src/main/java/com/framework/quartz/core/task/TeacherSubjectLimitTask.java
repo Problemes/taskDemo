@@ -26,7 +26,7 @@ public class TeacherSubjectLimitTask {
     @Autowired
     private TeacherAssessLimitService teacherAssessLimitService;
 
-    @Scheduled(cron = "0 57 10 * * ?")
+//    @Scheduled(cron = "0 0 12 ? * 4")
     public void setTeacherSubjectLimitTask(){
 
         Jedis jedis = null;
