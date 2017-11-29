@@ -1,4 +1,5 @@
-package com.yh.api.http;
+package com.framework.http.core;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
