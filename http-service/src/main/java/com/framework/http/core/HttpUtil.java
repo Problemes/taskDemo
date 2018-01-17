@@ -1,5 +1,11 @@
 package com.framework.http.core;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,6 +31,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -131,38 +139,38 @@ public class HttpUtil {
      * @param params 参数map
      * @return
      */
-    public static String doPost(String apiUrl, Map<String, Object> params) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String httpStr = null;
-        HttpPost httpPost = new HttpPost(apiUrl);
-        CloseableHttpResponse response = null;
-
-        try {
-            httpPost.setConfig(requestConfig);
-            List<NameValuePair> pairList = new ArrayList<>(params.size());
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
-                NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry
-                        .getValue().toString());
-                pairList.add(pair);
-            }
-            httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
-            response = httpClient.execute(httpPost);
-            System.out.println(response.toString());
-            HttpEntity entity = response.getEntity();
-            httpStr = EntityUtils.toString(entity, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (response != null) {
-                try {
-                    EntityUtils.consume(response.getEntity());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return httpStr;
-    }
+//    public static String doPost(String apiUrl, Map<String, Object> params) {
+//        CloseableHttpClient httpClient = HttpClients.createDefault();
+//        String httpStr = null;
+//        HttpPost httpPost = new HttpPost(apiUrl);
+//        CloseableHttpResponse response = null;
+//
+//        try {
+//            httpPost.setConfig(requestConfig);
+//            List<NameValuePair> pairList = new ArrayList<>(params.size());
+//            for (Map.Entry<String, Object> entry : params.entrySet()) {
+//                NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry
+//                        .getValue().toString());
+//                pairList.add(pair);
+//            }
+//            httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
+//            response = httpClient.execute(httpPost);
+//            System.out.println(response.toString());
+//            HttpEntity entity = response.getEntity();
+//            httpStr = EntityUtils.toString(entity, "UTF-8");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (response != null) {
+//                try {
+//                    EntityUtils.consume(response.getEntity());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return httpStr;
+//    }
 
     /**
      * 发送 POST 请求（HTTP），JSON形式
@@ -325,4 +333,92 @@ public class HttpUtil {
         }
         return sslsf;
     }
+
+
+    /**
+     * httpclient 上传 https://www.cnblogs.com/Scott007/p/3817285.html
+     * @param localFile 本地文件绝对路径
+     * @param URL_STR 上传的接口
+     */
+    public static String upload(String localFile, String URL_STR){
+
+        File file = new File(localFile);
+        PostMethod filePost = new PostMethod(URL_STR);
+        HttpClient client = new HttpClient();
+
+        try {
+            // 通过以下方法可以模拟页面参数提交，可考虑放入到形参中
+//            filePost.setParameter("userName", userName);
+//            filePost.setParameter("passwd", passwd);
+
+            Part[] parts = { new FilePart(file.getName(), file) };
+            filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
+
+            client.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+
+            int status = client.executeMethod(filePost);
+            if (status == HttpStatus.SC_OK) {
+                return "success";
+            } else {
+                System.out.println(status);
+                return "failure";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            filePost.releaseConnection();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * httpclient 文件下载：https://www.cnblogs.com/Scott007/p/3817285.html
+     * @param remoteFileName 下载的文件名
+     * @param localFileName 下载到本地的文件名
+     * @param URL_STR 下载接口
+     */
+    public static void download(String remoteFileName, String localFileName, String URL_STR) {
+
+        HttpClient client = new HttpClient();
+        GetMethod get = null;
+        FileOutputStream output = null;
+
+        try {
+            get = new GetMethod(URL_STR);
+
+            get.setRequestHeader("userName", "userName");
+            get.setRequestHeader("password", "password");
+            get.setRequestHeader("fileName", remoteFileName);
+
+            int i = client.executeMethod(get);
+
+            if (200 == i) {
+                System.out.println("The response value of token:" + get.getResponseHeader("token"));
+
+                File storeFile = new File(localFileName);
+                output = new FileOutputStream(storeFile);
+
+                // 得到网络资源的字节数组,并写入文件
+                output.write(get.getResponseBody());
+            } else {
+                System.out.println("DownLoad file occurs exception, the error code is :" + i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(output != null){
+                    output.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            get.releaseConnection();
+            client.getHttpConnectionManager().closeIdleConnections(0);
+        }
+    }
+
 }
