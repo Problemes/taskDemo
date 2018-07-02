@@ -36,9 +36,16 @@ public class SocketHandler implements WebSocketHandler {
         }
     }
 
+    /**
+     * 在UI在用js调用websocket.send()时候，会调用该方法
+     * @param webSocketSession
+     * @param webSocketMessage
+     * @throws Exception
+     */
     @Override
     public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
-
+        logger.info("客户端来消息了：" + webSocketMessage);
+        webSocketSession.sendMessage(new TextMessage("after client send... send server message back..."));
     }
 
     @Override

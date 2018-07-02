@@ -36,6 +36,7 @@
                 sock = new SockJS(basePath + "/sockjs/socketServer");
             }
             sock.onopen = function (e) {
+                sock.send("client message...")
                 console.log(e);
             };
             sock.onmessage = function (e) {

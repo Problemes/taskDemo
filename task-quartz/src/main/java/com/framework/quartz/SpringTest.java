@@ -1,30 +1,25 @@
 package com.framework.quartz;
 
 import com.framework.quartz.rabbitmq.MessageProducer;
+import com.framework.quartz.service.GoodsService;
+import com.framework.quartz.shiro_2.entity.User;
+import com.framework.quartz.util.QRCodeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-
-import javax.servlet.ServletRegistration;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 
 /**
  * spring的测试类
  * Created by HR on 2017/10/12.
  */
-/*@RunWith(SpringJUnit4ClassRunner.class)  //使用junit4进行测试
+@RunWith(SpringJUnit4ClassRunner.class)  //使用junit4进行测试
 @ContextConfiguration({"classpath*:application-*.xml"})
-@WebAppConfiguration*/
+@WebAppConfiguration
 public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests */{
 //继承AbstractTransactionalJUnit4SpringContextTests来获取Spring上下文环境来获取Bean
    /* @Autowired
@@ -49,5 +44,33 @@ public class SpringTest /*extends AbstractTransactionalJUnit4SpringContextTests 
         }*/
 
     }
+
+
+
+
+    @Autowired
+    private GoodsService goodsService;
+
+    @Test
+    public void testGoods(){
+
+        System.out.println(goodsService.getGoods(1000001l));
+    }
+
+    @Test
+    public void testUserCreate(){
+
+//        User user = new User();
+//
+//        user.setUsername("test");
+//        user.setPassword("testpw");
+//        user.setSalt("test");
+//
+//        User result = userService.createUser(user);
+//
+//        System.out.println(result.getId());
+
+    }
+
 
 }
